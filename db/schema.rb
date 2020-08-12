@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2020_08_11_083945) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "access_token"
-    t.datetime "expires_at"
     t.boolean "keep_alive", default: false
     t.string "status", default: "active"
     t.datetime "created_at", precision: 6, null: false
