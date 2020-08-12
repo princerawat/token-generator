@@ -15,4 +15,8 @@ class AccessToken < ApplicationRecord
 	def is_expired?
 		self.expires_at <= Time.now
 	end
+
+	def delete_token
+		DeleteTokenWorker.perform_in(5.minutes, self.id)
+	end
 end
