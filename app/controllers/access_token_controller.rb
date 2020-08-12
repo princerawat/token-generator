@@ -1,5 +1,5 @@
 class AccessTokenController < ApplicationController
-	before_action :find_token, only: [:unblock, :destroy]
+	before_action :find_token, only: [:unblock, :delete, :keep_alive]
 
 	def index
 		token = AccessToken.create
@@ -23,9 +23,10 @@ class AccessTokenController < ApplicationController
 
 	def keep_alive
 		@token.update(keep_alive: true)
+		render json: { message: 'Token status changed to keep-alive.' }
 	end
 
-	def destroy
+	def delete
 		@token.destroy
 		render json: { message: 'Token deleted.' }
 	end
