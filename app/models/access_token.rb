@@ -1,5 +1,6 @@
 class AccessToken < ApplicationRecord
 	before_create :generate_token
+	after_create :release_token
 	after_create :delete_token
 
 	# Statuses = ['active', 'released', 'unblocked', 'assigned']
@@ -18,5 +19,9 @@ class AccessToken < ApplicationRecord
 
 	def delete_token
 		DeleteTokenWorker.perform_in(5.minutes, self.id)
+	end
+
+	def release_token
+		ReleaseTokenWorker.perform_in(1.minutes, self.id)
 	end
 end
